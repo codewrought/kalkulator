@@ -1,0 +1,200 @@
+<html>
+<head>
+<script type="text/javascript">
+
+const resultStyle = "color:red;font-weight:bold";
+const ADD = "+";
+const SUBTRACT = "-";
+const MULTIPLY = "x";
+const DIVIDE = "÷";
+const FACTORIAL = "!";
+const SQUARE = "x^2";
+const SQUAREROOT = "√x";
+const POWER = "x^y";
+const INVERSE = "1/x";
+const UNARY_SET = [FACTORIAL,SQUARE,SQUAREROOT,INVERSE,];
+const FIRST = "first";
+const SECOND = "second";
+const OPERATOR = "operator";
+
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+function isUnary(operator) {
+    // if given operator is in the set of unary operators, it'll be at index of 0 or more.
+    return UNARY_SET.indexOf(operator) > -1; 
+}
+
+function setVisibility(id, visible) {
+    var element = document.getElementById(id);
+    if (visible) {
+        element.style.display = "inline";
+    } else {
+        element.style.display = "none";
+    }
+}
+
+function updateFields(operator) {
+    // hide the SECOND field if the user selects a unary operator
+    setVisibility(SECOND, !isUnary(operator));
+}
+
+function getValue(id) {
+    var str = document.getElementById(id).value;
+    if (isEmpty(str)) {
+        return undefined;
+    }
+    
+    return str;
+}
+	
+function showResult(result) {
+    var answerArea = document.getElementById("result");
+    answerArea.style = resultStyle;
+    answerArea.innerHTML = result;
+}
+
+function add(f, s) {
+    showResult(f + s);
+}
+
+function subtract(f, s) {
+	showResult(f - s);
+}
+
+function multiply(f, s) {
+    alert("Implement " + f + "x" + s + " here!"); // comment this out and implement!
+}
+
+function divide(f, s) {
+    alert("Implement " + f + "/" + s + " here!"); // comment this out and implement!
+}
+
+function nonRecursiveFactorial(f) {
+    if (f == 0) {
+        return 1; // special case!
+    }
+    var cumulate = f;
+    var i = f;
+
+    while (--i > 0) {
+        cumulate = cumulate * i;
+    }
+
+    return cumulate;
+}
+
+function recursiveFactorial(f) {
+    if (f < 1) {
+        return 1; // this is when the recursion ends
+    } else {
+        return f * recursiveFactorial(f - 1);
+    }
+}
+
+function factorial(f) {
+    if (f < 0 || f > 100) {
+        // Don't want the recursion to go more than 100 deep!
+        alert("Number out of range!");
+    } else {
+        showResult(nonRecursiveFactorial(f));
+    }
+
+}
+
+function square(f) {
+    alert("Implement square here!"); // comment this out and implement!
+}
+
+function squareRoot(f) {
+    alert("Implement squareroot here!"); // comment this out and implement!
+}
+
+function handleClick (button) {
+	var first = getValue(FIRST);
+    var operator = getValue(OPERATOR);
+    var second;
+
+    var firstNum;
+    var secondNum;
+ 
+	if (first == undefined) {
+        alert("Enter your first number!");
+        return false;
+    } else {
+        firstNum = Number(first);
+    }
+    
+    if (operator == undefined) {
+        alert("Select an operator!");
+		return false;
+	} else if (!isUnary(operator)) {
+        // Only get the second value if the operator is not unary.
+        second = getValue(SECOND);
+        if (second == undefined) {
+            alert("Enter your second number!");
+		    return false;
+        } else {
+            secondNum = Number(second);
+        }
+	}
+
+    switch (operator) {
+        case ADD:
+            add(firstNum, secondNum);
+            break;
+        case SUBTRACT:
+            subtract(firstNum, secondNum);
+            break;
+        case MULTIPLY:
+            multiply(firstNum, secondNum);
+            break;
+        case DIVIDE:
+            divide(firstNum, secondNum);
+        case FACTORIAL:
+            factorial(parseInt(first)); // force number into an real number
+            break;
+        case SQUARE:
+            square(firstNum);
+            break;
+        case SQUAREROOT:
+            squareRoot(firstNum);
+            break;
+        case POWER:
+            alert("Implement your own power of function!"); // comment this out and implement!
+            break;
+        case INVERSE:
+            alert("Implement your own 1/x function!"); // comment this out and implement!
+            break;
+        default:
+            return false;
+    }
+    return true;
+}
+
+</script>
+
+<title>Kalkulator! Version 2.1</title>
+</head>
+
+<body>
+Please enter a number and select an operation, followed by another number if required:<p>
+
+<input type="number" id="first">
+ <select id="operator" onchange="updateFields(this.value);">
+  <option value=""></option>
+  <option value="+">+</option>
+  <option value="-">-</option>
+  <option value="x">x</option>
+  <option value="÷">&#247;</option>
+  <option value="!">!</option>
+  <option value="x^2">x^2</option>
+  <option value="√x">&radic;x</option>
+  <option value="x^y">x^y</option>
+  <option value="1/x">1/x</option>
+ </select>
+ <input type="number" id="second" style="display:none"> = <span id="result">?</span>&nbsp;&nbsp;
+ <button onClick="handleClick(this)">Submit</button>
+
+</body>
+</html>
