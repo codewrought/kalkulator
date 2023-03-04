@@ -1,7 +1,7 @@
 # kalkulator
 Simple Javascript calculator to teach kids Javascript coding.
  
-Just need copy the kalkulator.html page to a local drive (e.g. your desktop) and double-click on it to open in the browser. 
+Just copy the kalkulator.html page to a local drive (e.g. your desktop) and double-click on it to open it in a browser. 
 
 Use Visual Studio Code (free download from Microsoft) to edit and debug OR you can use a simple text editor.
 
